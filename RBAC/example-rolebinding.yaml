@@ -1,0 +1,13 @@
+kind: RoleBinding  #将用户和角色绑定起来
+apiVersion: rbac.authoriztion.k8s.io/v1
+metadata:
+  name: example-rolebinding 
+  namespace: mynamespace
+subjects: #用户的引用
+- kind: User
+  name: example-user
+  apiGroup: rbac.authorization.k8s.io 
+roleRef:   #角色的引用
+  kind: Role
+  name: example-role 
+  apiGroup: rbac.authorization.k8s.io

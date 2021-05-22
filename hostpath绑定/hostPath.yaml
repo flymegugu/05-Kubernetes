@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy
+  labels:
+    app: nginx-deploy
+  namespace: default
+spec:
+  replicas: 1
+  revisionHistoryLimit: 14
+  selector:
+    matchLabels:
+      app: nginx-pod 
+  template:
+    metadata:
+      labels:
+        app: nginx-pod
+    spec:
+      containers:
+        - name: nginx 
+          image: nginx 
+          readnessProbe:
+            httpGet:
+              port: 80
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html 
+              name: nginx-volume 
+          ports:
+            - containerPort: 80
+              protocal: TCP
+      volumes:
+        - name: nginx-volume
+          persistentVolumeClaim:
+            claimName: nginx-pvc

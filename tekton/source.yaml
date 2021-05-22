@@ -1,0 +1,38 @@
+apiVersion: tekton.dev/v1alph1
+kind: PipelineResource
+metadata:
+  name: spring-cloud-demo
+spec:
+  type: git
+  params:
+  - name: url
+    value: git repo
+---
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: bulid-deploy-sae1
+spec:
+  inputs:
+    resources:
+    - name: source
+      type: git
+  steps:
+  - name: build-and-deploy
+    image: maven
+    command: []
+    securityContext:
+      runAsUser: 0
+---
+apiVersion: tekton.dev/v1alph1
+kind: TaskRun
+metadata:
+  name: bulid-deploy-sae
+spec:
+  taskRef:
+    name: bulid-deploy-sae1
+  inputs:
+    resources:
+    - name: source 
+      resourceRef:
+        name: spring-cloud-demo
