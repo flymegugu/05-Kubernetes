@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gugu-ingress
+spec:
+  rules:
+  - host: gugu.com
+    http:
+     paths:
+     - backend:
+         serviceName: web-deploy
+         servicePort: 88
